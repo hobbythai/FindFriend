@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "311057438794",
+    "firebase_url": "https://find-friend-23872.firebaseio.com",
+    "project_id": "find-friend-23872",
+    "storage_bucket": "find-friend-23872.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311057438794:android:a29effa83c96bee7",
+        "android_client_info": {
+          "package_name": "com.hobbythai.android.findfriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311057438794-trf7jhg52lpaa21mghhko2cgjq5u4in1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hobbythai.android.findfriend",
+            "certificate_hash": "55032a030c5020ec9e058d71658cbd2712886c6e"
+          }
+        },
+        {
+          "client_id": "311057438794-epjhd2hr1acdcgpejslf9rk03aqq2bm2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8Kb4gxdV4x3ub1feQ6Ov2I-rRJvdd_kU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311057438794-epjhd2hr1acdcgpejslf9rk03aqq2bm2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
