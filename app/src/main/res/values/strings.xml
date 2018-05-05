@@ -2,4 +2,6 @@
     <string name="app_name">Find Friend</string>
     <string name="email">Email :</string>
     <string name="new_register">New Register</string>
+    <string name="title_space">Have Space</string>
+    <string name="message_space">Please Fill All Blank</string>
 </resources>
