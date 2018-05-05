@@ -22,6 +22,9 @@ import android.widget.ImageView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -31,7 +34,7 @@ import com.hobbythai.android.findfriend.utility.MyAlert;
 
 public class RegisterFragment extends Fragment{
 
-    private String nameString, emailString, passwordString, pathAvataString;
+    private String nameString, emailString, passwordString, pathAvataString, uidUserString;
     private Uri uri;
     private ImageView imageView;
     private boolean chooseBoolean = true;
@@ -164,10 +167,50 @@ public class RegisterFragment extends Fragment{
                         strings[0] = uri.toString();
                         pathAvataString = strings[0];
                         Log.d("5MayV1", "Part = " + pathAvataString);
+
+                        //register mail to Firebase
+                        registerEmail();
+
                     }
                 });
 
     }
+
+    private void registerEmail() {
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.createUserWithEmailAndPassword(emailString, passwordString)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()) {
+                            Log.d("5MayV1", "regis ok");
+
+                            //get uid
+                            findUidUser();
+
+                        } else {
+                            MyAlert myAlert = new MyAlert(getActivity());
+                            myAlert.normalDialog("Can't Register",
+                                    task.getException().getMessage().toString());
+                        }
+
+                    }
+                });
+
+    }
+
+    private void findUidUser() {
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        uidUserString = firebaseUser.getUid().toString();
+        Log.d("5MayV1", "uid = " + uidUserString);
+
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

@@ -28,6 +28,7 @@ dependencies {
     // firebase Add this line
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-storage:15.0.2'
+    implementation 'com.google.firebase:firebase-auth:15.1.0'
 }
 
 // firebase Add to the bottom of the file
