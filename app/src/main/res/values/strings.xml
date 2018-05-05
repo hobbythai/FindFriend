@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Find Friend</string>
     <string name="email">Email :</string>
+    <string name="new_register">New Register</string>
 </resources>
