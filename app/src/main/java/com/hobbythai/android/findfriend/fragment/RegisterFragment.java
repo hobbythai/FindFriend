@@ -1,5 +1,6 @@
 package com.hobbythai.android.findfriend.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,6 +44,7 @@ public class RegisterFragment extends Fragment{
     private Uri uri;
     private ImageView imageView;
     private boolean chooseBoolean = true;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -98,8 +101,14 @@ public class RegisterFragment extends Fragment{
 
         if (item.getItemId() == R.id.itemUploadValue) {
 
-//            to do
+//            to do show prograss **
+
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Please Wait...");
+            progressDialog.show();
+
             checkTextField();
+
             return true;
         }
 
@@ -121,10 +130,16 @@ public class RegisterFragment extends Fragment{
 
         if (chooseBoolean) {
 //            non choose
+
+            progressDialog.dismiss();
+
             myAlert.normalDialog("Non Choose Image!",
                     "Please Choose Image");
 
+
         } else if (nameString.isEmpty()||emailString.isEmpty()||passwordString.isEmpty()) {
+
+            progressDialog.dismiss();
 
             myAlert.normalDialog(getString(R.string.title_space),getString(R.string.message_space));
 
@@ -150,6 +165,8 @@ public class RegisterFragment extends Fragment{
                     findPathAvata();
                 } else {
                     Log.d("5MayV1", "upload not" + task.getException());
+
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -195,6 +212,9 @@ public class RegisterFragment extends Fragment{
                             findUidUser();
 
                         } else {
+
+                            progressDialog.dismiss();
+
                             MyAlert myAlert = new MyAlert(getActivity());
                             myAlert.normalDialog("Can't Register",
                                     task.getException().getMessage().toString());
@@ -213,12 +233,25 @@ public class RegisterFragment extends Fragment{
         uidUserString = firebaseUser.getUid().toString();
         Log.d("5MayV1", "uid = " + uidUserString);
 
-        //all data ok now **
-        updateNewUserToFirebase();
+//        setup display name
+        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+        builder.setDisplayName(nameString);
+
+        UserProfileChangeRequest userProfileChangeRequest = builder.build();
+
+        firebaseUser.updateProfile(userProfileChangeRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                //all data ok now **
+                updateNewUserToFirebase();
+            }
+        });
 
     }
 
     private void updateNewUserToFirebase() {
+
+        progressDialog.dismiss();
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference()
@@ -231,6 +264,12 @@ public class RegisterFragment extends Fragment{
             public void onSuccess(Void aVoid) {
 
                 Log.d("5MayV1", "update user ok");
+
+                //go service fragment ***
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contentMainFragment, new ServiceFragment())
+                        .commit();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
