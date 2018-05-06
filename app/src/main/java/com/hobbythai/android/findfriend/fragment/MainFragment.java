@@ -41,6 +41,7 @@ public class MainFragment extends Fragment {
     } //main method
 
     private void signinController() {
+
         Button button = getView().findViewById(R.id.btnSignIn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +49,7 @@ public class MainFragment extends Fragment {
 
                 progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setTitle("Please Wait...");
-                progressDialog.setMessage("Check Authen few minus!");
+                //progressDialog.setMessage("Check Authen few minus!");
                 progressDialog.show();
 
                 EditText emailEditText = getView().findViewById(R.id.edtEmail);
